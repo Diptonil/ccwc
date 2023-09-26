@@ -52,14 +52,24 @@ class Application:
     def get_result(self) -> None:
         """To evaluate final result."""
         if self.file_name == "temp.txt":
-            self.file_name = ""
-        if self.requirements["needs_bytes"]:
-            print(self.get_bytes(), self.file_name)
-        elif self.requirements["needs_lines"]:
-            print(self.get_lines(), self.file_name)
-        elif self.requirements["needs_words"]:
-            print(self.get_words(), self.file_name)
-        elif self.requirements["needs_characters"]:
-            print(self.get_characters(), self.file_name)
+            if self.requirements["needs_bytes"]:
+                print(self.get_bytes())
+            elif self.requirements["needs_lines"]:
+                print(self.get_lines())
+            elif self.requirements["needs_words"]:
+                print(self.get_words())
+            elif self.requirements["needs_characters"]:
+                print(self.get_characters())
+            else:
+                print(self.get_lines(), self.get_words(), self.get_bytes())
         else:
-            print(self.get_lines(), self.get_words(), self.get_bytes(), self.file_name)
+            if self.requirements["needs_bytes"]:
+                print(self.get_bytes(), self.file_name)
+            elif self.requirements["needs_lines"]:
+                print(self.get_lines(), self.file_name)
+            elif self.requirements["needs_words"]:
+                print(self.get_words(), self.file_name)
+            elif self.requirements["needs_characters"]:
+                print(self.get_characters(), self.file_name)
+            else:
+                print(self.get_lines(), self.get_words(), self.get_bytes(), self.file_name)
