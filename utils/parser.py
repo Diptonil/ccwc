@@ -1,5 +1,5 @@
-from argparse import ArgumentParser
-import logging
+from argparse import ArgumentParser, FileType
+import sys
 
 
 class Parser:
@@ -9,7 +9,7 @@ class Parser:
         self.parser = ArgumentParser(prog="ccwc", description="Tool to show word, line, character, and byte count.", add_help=False)
         self.add_parser_arguments()
         self.args = vars(self.parser.parse_args())
-        print(self.args)
+        #print(self.args)
 
     def __str__(self) -> str:
         return "The main argument parser."
@@ -17,7 +17,7 @@ class Parser:
     def add_parser_arguments(self) -> None:
         """Adds all required arguments to the parser."""
         positional_arguments_group = self.parser.add_argument_group("POSITIONAL ARGUMENTS")
-        positional_arguments_group.add_argument("file", type=str, help="The file path that needs to be analysed.")
+        positional_arguments_group.add_argument("file", nargs="?", type=FileType("r"), default=sys.stdin, help="The file path that needs to be analysed.")
         options_group = self.parser.add_mutually_exclusive_group()
         options_group.add_argument("-h", "--help", action="help", help="To show this help message.")
         options_group.add_argument("-c", "--bytes", action="store_true", help="To show number of bytes in a file.")
@@ -27,7 +27,7 @@ class Parser:
 
     def get_file_name(self) -> str:
         """Returns the source file name."""
-        return self.args["file"]
+        return self.args["file"].name
 
     def needs_bytes(self) -> bool:
         """Returns if -c flag is passed."""
